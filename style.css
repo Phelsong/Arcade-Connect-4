@@ -3,37 +3,54 @@
     display: flex;
     max-width: 100vw;
     height: 100vh;
+    flex-direction: column;
 }
 body{
     margin: 0;
-    height: 100%;
+    height: 90%;
     width: 99%;
+}
+header {
+    width: 100%;
+    height: 10%;
+    justify-content: center;
+}
+#boardSizeDropdown {
+    width: 10%;
+    height: 100%;
 }
 .htmlGameBoard {
     width: 100%;
     height: 100%;
     border: 6px solid black;
-    flex-flow: row no-wrap;
+    flex-flow: row ;
+    /* z-index: -1; */
 }
 .styleColumn {
     margin: 0;
     padding: 1%;
     width: 14.25%;
-    background-color: darkorange;
-    flex-flow: row no-wrap;
-    flex: 1 1 1;
+    background-color: rgba(175, 123, 60, 0.651);
+    flex-flow: column-reverse;
+    flex: 1%;
 }
 .styleSlot {
     margin: 2%;
     width: 80%;
+    height: 80%;
     background-color: green;
-    flex-flow: row no-wrap;
-    flex: 1 1 1;z
+    flex: 1%;
+    align-items: center;
+    justify-content: center;
 }
 .styleToken {
-    width: 80%;
-    background-color: double aqua;
+    height: 60%;
+    width: 60%;
+    background-color: aqua;
+    border-radius: 50%;
 }
+
+
 
 
 

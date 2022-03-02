@@ -3,19 +3,26 @@ html'xxx' = static html
 vis'xxx' = procedurally gen html
 style'xxx' = CSS visual element
 */
+// Var dump
 const visBoard = document.querySelector('.htmlGameBoard')
+const dropSelection = document.querySelector('select')
+let chosenSize = 4
+//var dump
+
+
+
 const gameState = {
     gameBoard : {},
     players : ['red', 'yellow'],
-    turn : null,// define value
+    turn : 'red',// define value
     gameStatus: 'playing',
-
+    
 }
-let userBoardSize = 4
+console.log(gameState.gameBoard)
 
 function generateColumns() {
     let map = new Map([
-        ["slot1", null],
+        ["slot1", null], //red
         ["slot2", null],
         ["slot3", null],
         ["slot4", null],
@@ -26,36 +33,62 @@ function generateColumns() {
     return map 
 }
 
+
+
+
+// **** Set Game Size
+
+dropSelection.addEventListener("change", function(event){
+    chosenSize = Number(event.target.value)
+  });
+
+
+
 function createColumn() {
     let visColumn = document.createElement('div')
     visColumn.classList.add('styleColumn')
     for (let i = 0; i < 6; i++) {
         let visSlot = document.createElement('div')
-        visSlot.id = `slot${i+1}`
+        visSlot.classList.add(`slot${i+1}`)
         visSlot.classList.add('styleSlot')
         visColumn.appendChild(visSlot)
     }
     visBoard.appendChild(visColumn)
 }
 
-
 function setGameBoard (){
-    for (let i = 0; i < userBoardSize+3; i ++){
+    for (let i = 0; i < chosenSize+3; i ++){
     gameState.gameBoard[`column${i+1}`] = generateColumns()
     }
 }
 setGameBoard()
 
 
-function placeGameToken () {
-    Object.getOwnPropertyDescriptor(gameState.gameBoard, "@click location@")
+
+visBoard.addEventListener(`click`, function(event) {
+    function placeGameToken () {
+        //Object.getOwnPropertyDescriptor(
+        console.log(event.target)
+      
+        Object.defineProperty(gameState.gameBoard, event.target.value, {value : gameState.turn})
+
+
+
     
-    Object.definteProperty(gameState, gameBoard, "@click location@", {value : "@turn@"})
-    let visToken = document.createElement('div')
-    visToken.id = `turn token`
-    visToken.classList.add('styleToken')
-    visSlot.appendChild(visToken)
-}
+
+
+
+
+        let visToken = document.createElement('div')
+        visToken.classList.add (`playerToken`)
+        visToken.classList.add('styleToken')
+        event.target.appendChild(visToken)
+    }
+    placeGameToken()
+  }, {passive:true});
+
+
+
 
 // function solutionCheck () {
 //     for (x of gameState.gameBoard){
