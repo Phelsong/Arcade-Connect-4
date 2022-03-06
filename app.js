@@ -42,7 +42,7 @@ function setGameBoard (){
         for (let i = 0; i < 6; i++) {
             let slot = document.createElement('div')
             slot.classList.add(`htmlSlot`, 'styleSlot')
-            slot.id = `slot${i+1}`
+            slot.id = `column${counter+1}slot${i+1}`
             column.appendChild(slot)
         }
         visBoard.appendChild(column)
@@ -59,45 +59,33 @@ const visColumn = document.querySelector('.styleColumn')
 
 visBoard.addEventListener(`click`, function(event) {
 
-    let columnClicked = event.target.parentElement.id
-    console.log(columnClicked)
-    let columnLookup = gameState.gameBoard[columnClicked]
-    console.log(columnLookup)
-    const findASlot = columnLookup.find((slot) => slot.value === 'slot1')
-        console.log(findASlot)
-    function placeGameToken () {
-        
-        function findASlot234() {
-            let outValue = null
-            //gameState.gameBoard[columnClicked]
-            
-            gameState.gameBoard[columnClicked]
-            console.log(gameState.gameBoard[columnClicked].entries())   
-            return outValue
-          }
+    const columnClicked = event.target.parentElement.id
+
+    let slotId = null
+    function slotFinder () {
+        for (let i = 1; i < 7; i++) {
        
-            // if (visColumn.firstChild.nodeValue !== 'red') {
-            //   t2.firstChild.nodeValue = "two";
-            // } else {
-            //   t2.firstChild.nodeValue = "three";
-            //   controller.abort();
-      
-        // console.log(Object.defineProperty(gameState.gameBoard, columnClicked, firstFreeSlot {value : gameState.turn}))
+        let slotValue = gameState.gameBoard[columnClicked].get(`slot${i}`)
 
+            if (slotValue === null){
+            gameState.gameBoard[columnClicked].set(`slot${i}`, 'red')
+            slotId = `slot${i}`
+            break;
+            }
+        }
+    }   
+    slotFinder()
 
-
-    
-
-
-
-
-        let token = document.createElement('div')
-        token.classList.add (`playerToken`)
-        token.classList.add('styleToken')
-        event.target.appendChild(token)
+    // console.log(gameState.gameBoard, 'gameboard post click')
+   
+    function placeGameToken () {
+        const slot = document.querySelector(`#` +columnClicked+slotId)
+        const token = document.createElement('div')
+        token.classList.add (`playerToken`, `styleToken`)
+        slot.appendChild(token)
     }
     placeGameToken()
-  });
+});
 
 
 
@@ -113,6 +101,28 @@ visBoard.addEventListener(`click`, function(event) {
 // function updateBoard() {
 //     // update board values
 // }
+
+
+
+
+
+
+// function findASlot234() {
+//     let outValue = null
+//     //gameState.gameBoard[columnClicked]
+    
+//     gameState.gameBoard[columnClicked]
+//     console.log(gameState.gameBoard[columnClicked].entries())   
+//     return outValue
+//   }
+
+    // if (visColumn.firstChild.nodeValue !== 'red') {
+    //   t2.firstChild.nodeValue = "two";
+    // } else {
+    //   t2.firstChild.nodeValue = "three";
+    //   controller.abort();
+
+// console.log(Object.defineProperty(gameState.gameBoard, columnClicked, firstFreeSlot {value : gameState.turn}))
 
 
 
