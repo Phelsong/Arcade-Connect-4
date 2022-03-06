@@ -48,10 +48,16 @@ header {
     justify-content: center;
     z-index: 100;
 }
+.redPlayerToken{
+    background-color: red;
+}
+.yellowPlayerToken{
+    background-color: yellow;
+}
 .styleToken {
     height: 65%;
     width: 65%;
-    background-color: aqua;
+    
     border-radius: 50%;
     z-index: -1;
 }
