@@ -7,25 +7,14 @@ const visBoard = document.querySelector('.htmlGameBoard')
 const dropSelection = document.querySelector('select')
 
 const gameState = {
-    gameBoard: {},
+    gameBoard: new Map,
     connect: 4,
     players: ['red', 'yellow'],
     turn: 'red', // define value
     gameStatus: 'playing',
     setGameBoard: function () {
-        // sets the size of the board based on the dropdown selection
-        function generateColumnMap() {
-            let map = new Map([
-                ["slot1", null],
-                ["slot2", null],
-                ["slot3", null],
-                ["slot4", null],
-                ["slot5", null],
-                ["slot6", null]
-            ])
-            return map
-        }
-
+       
+        // creates html elements based on selection
         function createHTMLColumn(counter) {
             let column = document.createElement('div')
             column.classList.add(`htmlColumn`, 'styleColumn')
@@ -39,9 +28,17 @@ const gameState = {
             }
             visBoard.appendChild(column)
         }
+        // sets the size of the board based on the dropdown selection
         for (let i = 1; i < this.connect + 4; i++) {
+            this.gameBoard[`column${i}`] = new Map([
+                ["slot1", null],
+                ["slot2", null],
+                ["slot3", null],
+                ["slot4", null],
+                ["slot5", null],
+                ["slot6", null]
+            ])
             createHTMLColumn(i)
-            this.gameBoard[`column${i}`] = generateColumnMap()
         }
 
     },
@@ -65,7 +62,7 @@ const gameState = {
                 }
             }
         }
-        //function call
+        // *function call*
         slotFinder()
 
         //places a token same unassigned slot as slotFinder, *Visually*, assigned to the current player's turn
@@ -75,24 +72,46 @@ const gameState = {
             token.classList.add(`${gameState.turn}PlayerToken`, `styleToken`)
             slot.appendChild(token)
         }
-        // function call
+        // *function call*
         generateGameToken()
         // console.log(gameState.gameBoard, 'gameboard post click')
     },
     checkForWinner: function () {
-        const currColumn = this.gameBoard[this.lastClickEvent.column].values()
-
-            for (let i = 0; i < currColumn.length; i++) {
-                currCOlumn.next().value()
-
-                
-                
-            }
-            
+        const solutionCounter = {
+            verticalCheck: 0,
+            leftRowCheck: 0,
+            rightRowCheck: 0,
+            lowerLeftDiagCheck: 0,
+            upperLeftDiagCheck: 0,
+            upperRightDiagCheck: 0,
+            lowerLeftDiagCheck: 0
+        }
         
+        //check vertical win
+            function checkVertical() {
+                for (const entry of gameState.gameBoard[gameState.lastClickEvent.column]) {
+                    if (entry[1] !== gameState.turn) {
+                        break;
+                    } else {
+                        solutionCounter.verticalCheck++
+                        if (solutionCounter.verticalCheck === gameState.connect) {
+                        // placeholder *** add real output
+                        console.log(`${gameState.turn} Wins!`)
+                        }
+                    }
+                }
+            }
+        //*function call*
+        checkVertical()
+        // check to the left
+        function checkLeft (){
+            
 
-
-
+        }
+        //*function call*
+        checkLeft()
+        console.log(gameState.gameBoard.entries())
+        console.log(gameState.lastClickEvent)
 
 
 
@@ -102,33 +121,31 @@ const gameState = {
     }
 
 }
+
+
+
+
+
 console.log(gameState.gameBoard)
 
 // **** Set Game Size ****
 //dropdown game-size listener
 dropSelection.addEventListener("change", function (event) {
-        gameState.connect = Number(event.target.value)
+       gameState.connect = Number(event.target.value)
     }),
-    // function call to set game size
-    gameState.setGameBoard()
+// function call to set game size
+gameState.setGameBoard()
 
 // place token click listener
-visBoard.addEventListener(`click`, function (event) {
+visBoard.addEventListener(`click`, async function (event) {
     //value is the ID of the column at the click event
     // *****************slice band-aid+++++ revisit later
-    gameState.lastClickEvent.column = event.target.parentElement.id.slice(0, 7)
+    gameState.lastClickEvent.column = await event.target.parentElement.id.slice(0, 7)
     gameState.placeGameToken()
+    gameState.checkForWinner()
     if (gameState.turn === gameState.players[0]) {
         gameState.turn = gameState.players[1]
     } else {
         gameState.turn = gameState.players[0]
     }
-    gameState.checkForWinner()
 });
-
-
-//click thee olde DOM column to drop token
-
-// function updateBoard() {
-//     // update board values
-// }
