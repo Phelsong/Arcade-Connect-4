@@ -5,13 +5,14 @@ style'xxx' = CSS visual element
 */
 const visBoard = document.querySelector('.htmlGameBoard')
 const dropSelection = document.querySelector('select')
+const visGameStatus = document.querySelector('.gameStatus')
 
 const gameState = {
     gameBoard: {},
     connect: 4,
     players: ['red', 'yellow'],
     turn: 'red', // define value
-    gameStatus: 'playing',
+    gameStatus: 'Game Active!',
     setGameBoard: function () {
 
         // creates html elements based on selection
@@ -106,7 +107,7 @@ const gameState = {
                     solutionCounter.verticalCheck++
                     if (solutionCounter.verticalCheck === gameState.connect) {
                         // placeholder *** add real output
-                        console.log(`${gameState.turn} Wins!`)
+                        gameState.gameStatus = `${gameState.turn} Wins!`
                         break;
                     }
                 }
@@ -128,7 +129,7 @@ const gameState = {
                 } else {
                     solutionCounter.leftRowCheck++
                     if (solutionCounter.leftRowCheck === gameState.connect) {
-                        console.log(`${gameState.turn} Wins!`)
+                        gameState.gameStatus = `${gameState.turn} Wins!`
                         break;
                     }
                 }
@@ -150,7 +151,7 @@ const gameState = {
                 } else {
                     solutionCounter.rightRowCheck++
                     if (solutionCounter.rightRowCheck === gameState.connect) {
-                        console.log(`${gameState.turn} Wins!`)
+                        gameState.gameStatus = `${gameState.turn} Wins!`
                         break;
                     }
                 }
@@ -179,15 +180,14 @@ const gameState = {
 
                 // Lower check value
                 let toTheLower = gameState.gameBoard[gameBoardIDX[solutionIDXs.toTheLeftIDX]].get(verticalIdxArray[solutionIDXs.verticalIDX])
-                console.log(toTheLower, "to the lower left Diag")
+                // console.log(toTheLower, "to the lower left Diag")
                 // Lower left Win Check
                 if (toTheLower !== gameState.turn) {
                     break
                 } else {
                     solutionCounter.lowerLeftDiagCheck++
-                    console.log(solutionCounter.lowerLeftDiagCheck)
                     if (solutionCounter.lowerLeftDiagCheck === gameState.connect) {
-                        console.log(`${gameState.turn} Wins!`)
+                        gameState.gameStatus = `${gameState.turn} Wins!`
                         break;
                     }
                 }
@@ -222,7 +222,7 @@ const gameState = {
                 } else {
                     solutionCounter.upperLeftDiagCheck++
                     if (solutionCounter.upperLeftDiagCheck === gameState.connect) {
-                        console.log(`${gameState.turn} Wins!`)
+                        gameState.gameStatus = `${gameState.turn} Wins!`
                         break;
                     }
                     // console.log(toTheUpper, 'to the upper left Diag')
@@ -252,14 +252,14 @@ const gameState = {
 
                 // Lower check value
                 let toTheLower = gameState.gameBoard[gameBoardIDX[solutionIDXs.toTheRightIDX]].get(verticalIdxArray[solutionIDXs.verticalIDX])
-                console.log(toTheLower, "to the lower right Diag")
+                // console.log(toTheLower, "to the lower right Diag")
                 // Lower Right Win Check
                 if (toTheLower !== gameState.turn) {
                     break
                 } else {
                     solutionCounter.lowerRightDiagCheck++
                     if (solutionCounter.lowerRightDiagCheck === gameState.connect) {
-                        console.log(`${gameState.turn} Wins!`)
+                        gameState.gameStatus = `${gameState.turn} Wins!`
                         break;
                     }
                 }
@@ -294,7 +294,7 @@ const gameState = {
                 } else {
                     solutionCounter.upperRightDiagCheck++
                     if (solutionCounter.upperRightDiagCheck === gameState.connect) {
-                        console.log(`${gameState.turn} Wins!`)
+                        gameState.gameStatus = `${gameState.turn} Wins!`
                         break;
                     }
                     // console.log(toTheUpper, 'to the upper Right Diag')
@@ -309,7 +309,7 @@ const gameState = {
 
 // **** Set Game Size ****
 //dropdown game-size listener
-dropSelection.addEventListener("change", function (event) {
+dropSelection.addEventListener("change", async function (event) {
         gameState.connect = Number(event.target.value)
     }),
     // function call to set game size
@@ -327,4 +327,5 @@ visBoard.addEventListener(`click`, async function (event) {
     } else {
         gameState.turn = gameState.players[0]
     }
+    visGameStatus.innerText = gameState.gameStatus
 })
