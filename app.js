@@ -311,11 +311,13 @@ const gameState = {
 
 // **** Set Game Size ****
 //dropdown game-size listener
-dropSelection.addEventListener("change", async function (event) {
+dropSelection.addEventListener("change", async function changeList (event) {
         gameState.connect = Number(event.target.value)
+        gameState.setGameBoard()
+        dropSelection.removeEventListener("change", changeList )
     }),
     // function call to set game size
-    gameState.setGameBoard()
+    
 
 // place token click listener
 visBoard.addEventListener(`click`, async function (event) {
