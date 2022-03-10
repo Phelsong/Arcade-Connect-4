@@ -52,7 +52,7 @@ select option {
     display: none;
 }
 .htmlGameBoard {
-    width: 70%;
+    width: 60%;
     max-height: 100%;
     margin: 0 1% 0 1%;  
     border: 6px solid rgb(83, 141, 168);
