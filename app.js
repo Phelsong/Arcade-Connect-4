@@ -53,8 +53,9 @@ const gameState = {
         function slotFinder() {
             for (let i = 1; i < 7; i++) {
                 // gets the location value for where the last click event *SHOULD* place
+               
                 let slotValue = gameState.gameBoard[gameState.lastClickEvent.column].get(`slot${i}`)
-
+              
                 if (slotValue === null) {
                     //assigns the slot value according to the active players turn
                     gameState.gameBoard[gameState.lastClickEvent.column].set(`slot${i}`, gameState.turn)
@@ -65,6 +66,7 @@ const gameState = {
                     function generateGameToken() {
                         const slot = document.querySelector(`#` + gameState.lastClickEvent.column + gameState.lastClickEvent.slot)
                         const token = document.createElement('div')
+                        token.id = `${gameState.lastClickEvent.column+gameState.lastClickEvent.slot+'token'}`
                         token.classList.add(`${gameState.turn}PlayerToken`, `styleToken`)
                         slot.appendChild(token)
                     }
