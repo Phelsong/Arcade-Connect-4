@@ -319,7 +319,7 @@ dropSelection.addEventListener("change", async function (event) {
 visBoard.addEventListener(`click`, async function (event) {
     //value is the ID of the column at the click event
     // *****************slice band-aid+++++ revisit later
-    gameState.lastClickEvent.column = await event.target.parentElement.id.slice(0, 7)
+    gameState.lastClickEvent.column = await event.target.id.slice(0, 7)
     gameState.placeGameToken()
     gameState.checkForWinner()
     if (gameState.turn === gameState.players[0]) {
