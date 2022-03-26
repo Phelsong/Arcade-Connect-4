@@ -4,16 +4,24 @@ vis'xxx' = linked html
 style'xxx' = CSS visual element
 */
 const visBoard = document.querySelector('.htmlGameBoard')
-const dropSelection = document.querySelector('select')
+const dropSelection = document.querySelector('#boardSizeDropdown')
 const visGameStatus = document.querySelector('.gameStatus')
 
 const gameState = {
     gameBoard: {},
     connect: 4,
+    player1Name: 'Red',
+    player2Name: 'Yellow',
     players: ['red', 'yellow'],
-    turn: 'red', // define value
+    turn: 'red',
     gameStatus: 'Game Active!',
     setGameBoard: function () {
+        
+        // reset game board
+        gameState.gameBoard = {}
+        visBoard.innerHTML = null
+        gameState.gameStatus = 'Game Active!'
+
 
         // creates html elements based on selection
         function createHTMLColumn(counter) {
@@ -98,8 +106,6 @@ const gameState = {
             verticalIDX2: null
         }
         const gameBoardIDX = Array.from(Object.keys(gameState.gameBoard))
-        //check vertical win
-
 
         function checkVertical() {
             for (const entry of gameState.gameBoard[gameState.lastClickEvent.column]) {
@@ -109,15 +115,12 @@ const gameState = {
                     solutionCounter.verticalCheck++
                     if (solutionCounter.verticalCheck === gameState.connect) {
                         // placeholder *** add real output
-                        gameState.gameStatus = `${gameState.turn} Wins!`
+                        gameState.winMessage()
                         break;
                     }
                 }
             }
         }
-        //*function call*
-        checkVertical()
-        // checks to the left
         function checkLeft() {
             for (let i = 1; i < gameState.connect; i++) {
                 solutionIDXs.toTheLeftIDX = gameBoardIDX.indexOf(gameState.lastClickEvent.column) - i
@@ -131,16 +134,13 @@ const gameState = {
                 } else {
                     solutionCounter.leftRowCheck++
                     if (solutionCounter.leftRowCheck === gameState.connect) {
-                        gameState.gameStatus = `${gameState.turn} Wins!`
+                        gameState.winMessage()
                         break;
                     }
                 }
 
             }
         }
-        //*function call*
-        checkLeft()
-
         function checkRight() {
             for (let i = 1; i < gameState.connect; i++) {
                 solutionIDXs.toTheRightIDX = gameBoardIDX.indexOf(gameState.lastClickEvent.column) + i
@@ -153,16 +153,13 @@ const gameState = {
                 } else {
                     solutionCounter.rightRowCheck++
                     if (solutionCounter.rightRowCheck === gameState.connect) {
-                        gameState.gameStatus = `${gameState.turn} Wins!`
+                        gameState.winMessage()
                         break;
                     }
                 }
 
             }
         }
-        // **function call**
-        checkRight()
-
         function checkDiagonalLowerLeft() {
             for (let i = 1; i < gameState.connect; i++) {
                 //column to the left of the last placed token
@@ -189,16 +186,13 @@ const gameState = {
                 } else {
                     solutionCounter.lowerLeftDiagCheck++
                     if (solutionCounter.lowerLeftDiagCheck === gameState.connect) {
-                        gameState.gameStatus = `${gameState.turn} Wins!`
+                        gameState.winMessage()
                         break;
                     }
                 }
 
             }
         }
-        // **function call
-        checkDiagonalLowerLeft()
-
         function checkDiagonalUpperLeft() {
             for (let i = 1; i < gameState.connect; i++) {
                 //column to the left of the last placed token
@@ -224,16 +218,13 @@ const gameState = {
                 } else {
                     solutionCounter.upperLeftDiagCheck++
                     if (solutionCounter.upperLeftDiagCheck === gameState.connect) {
-                        gameState.gameStatus = `${gameState.turn} Wins!`
+                        gameState.winMessage()
                         break;
                     }
                     // console.log(toTheUpper, 'to the upper left Diag')
                 }
             }
         }
-        // ** function call
-        checkDiagonalUpperLeft()
-        // 
         function checkDiagonalLowerRight() {
             for (let i = 1; i < gameState.connect; i++) {
                 //column to the left of the last placed token
@@ -261,16 +252,13 @@ const gameState = {
                 } else {
                     solutionCounter.lowerRightDiagCheck++
                     if (solutionCounter.lowerRightDiagCheck === gameState.connect) {
-                        gameState.gameStatus = `${gameState.turn} Wins!`
+                        gameState.winMessage()
                         break;
                     }
                 }
 
             }
         }
-        //**function call
-        checkDiagonalLowerRight()
-
         function checkDiagonalUpperRight() {
             for (let i = 1; i < gameState.connect; i++) {
                 //column to the left of the last placed token
@@ -296,26 +284,59 @@ const gameState = {
                 } else {
                     solutionCounter.upperRightDiagCheck++
                     if (solutionCounter.upperRightDiagCheck === gameState.connect) {
-                        gameState.gameStatus = `${gameState.turn} Wins!`
+                        gameState.winMessage()
                         break;
                     }
                     // console.log(toTheUpper, 'to the upper Right Diag')
                 }
             }
         }
-        // ** function call
+
+        // ** function calls
+        checkVertical()
+        checkLeft()
+        checkRight()
+        checkDiagonalLowerLeft()
+        checkDiagonalUpperLeft()
+        checkDiagonalLowerRight()
         checkDiagonalUpperRight()
+        
+    },
+    winMessage: function () {
+        if (gameState.turn === 'red'){
+         gameState.gameStatus = gameState.player1Name + ' Wins!'               
+        } else {
+            gameState.gameStatus = gameState.player2Name + ' Wins!'     
+        }
+        //clear game board
+        visBoard.innerHTML = null
+        //creates Win Screen and Reset Button
+        let visWinScreen = document.createElement('div')
+        visWinScreen.classList.add('styleWinScreen')
+        visBoard.appendChild(visWinScreen)
+        let visWinMessage = document.createElement('div')
+        visWinMessage.classList.add('styleWinMessage')
+        visWinMessage.innerText = gameState.gameStatus
+        visWinScreen.appendChild(visWinMessage)
+        visResetButton = document.createElement('button')
+        visResetButton.classList.add('styleReset')
+        visResetButton.innerText = "New Game?"
+        visResetButton.addEventListener ('click', () => gameState.setGameBoard())  
+        visWinScreen.appendChild(visResetButton)
     }
+    
+    
 }
 // console.log(gameState.gameBoard)
 
 // **** Set Game Size ****
 //dropdown game-size listener
 dropSelection.addEventListener("change", async function changeList (event) {
+
         gameState.connect = Number(event.target.value)
         gameState.setGameBoard()
-        dropSelection.removeEventListener("change", changeList )
-    }),
+                
+}),
     // function call to set game size
     
 
@@ -328,8 +349,26 @@ visBoard.addEventListener(`click`, async function (event) {
     gameState.checkForWinner()
     if (gameState.turn === gameState.players[0]) {
         gameState.turn = gameState.players[1]
+        gameState.gameStatus = gameState.player2Name + `'s` + ` turn`
     } else {
         gameState.turn = gameState.players[0]
+        gameState.gameStatus = gameState.player1Name + `'s` + ` turn`
     }
+        
     visGameStatus.innerText = gameState.gameStatus
 })
+
+function player1Input() {
+
+    gameState.player1Name = document.getElementById("Player1").value
+    console.log(gameState.player1Name)
+    
+}
+
+function player2Input() {
+
+    gameState.player2Name = document.getElementById("Player2").value
+    console.log(gameState.player2Name)
+    
+}
+

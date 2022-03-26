@@ -8,17 +8,34 @@
     <title>Document</title>
     <link rel="stylesheet"  href="style.css"></link>
 </head>
-<header>
-    <div class="gameStatus">Game Ready!</div>
-    <select id=""boardSizeDropdown>
-        <option id="hiddenOption" value='0'> Game Size</option>
-        <option value='4'> Connect 4</option>
-        <option value='3'> Connect 3</option>
-        <option value='5'> Connect 5</option> 
-        <option value='6'> Connect 6</option> 
-    </select>
-</header>
 <body>
+    <header>
+        <div class="gameStatus">Game Ready!</div>
+        <select title="gametype" id="gameType">
+        <option class="hiddenOption" value="null"> Play...</option>
+        <option value='pvc'> Single Player Game</option>
+        <option value='pvpl'> Player vs Player (local)</option>
+        </select>
+        <select title="gamesize" id="boardSizeDropdown">
+            <option class="hiddenOption" value='0'> Game Size</option>
+            <option value='4'> Connect 4</option>
+            <option value='3'> Connect 3</option>
+            <option value='5'> Connect 5</option> 
+            <option value='6'> Connect 6</option> 
+        </select>
+        <div class="playerFormss">
+            <form class="playerForm" role="form">
+                <label for="Player1"></label>
+                <input type="text" placeholder="Player 1 name..." id="Player1"> </input>
+                <button type="reset" title="test" onClick="player1Input()" class="submitButton">Submit</button>
+            </form>
+            <form class="playerForm" role="form">
+                <label for="Player2"></label>
+                <input type="text" placeholder="Player 2 name..." id="Player2"> </input>
+                <button type="reset" title="test" onClick="player2Input()" class="submitButton">Submit</button>
+            </form>
+            </div>
+    </header>
     <section class="htmlGameBoard">
 
     </section>

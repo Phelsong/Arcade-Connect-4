@@ -1,30 +1,54 @@
-* { 
-    box-sizing: border-box;
-    display: flex;
+body {
     max-width: 100vw;
     height: 100vh;
-    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
     background-color: rgb(236, 233, 206);
-}
-body{
     margin: 0;
-    height: 90%;
-    width: 99%;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+body * {
+    box-sizing: border-box;
+    display: flex;
+    margin: 0;
     justify-content: center;
     align-items: center;
 }
 header {
     width: 100%;
     max-height: 10%;
+    top:0;
     margin: 1% 0 1% 0;
     justify-content: center;
     align-items: center;
     flex-flow: row nowrap;
 }
+.playerFormss {
+width: 15%;
+height: 100%;
+flex-flow: column nowrap;
+margin-left: 2%; 
+}
+.playerForm {
+width: 100%;
+height: 50%;
+margin: 2%;l
+}
+.playerForm input {
+    height: 100%;
+    width: 80%;
+}
+.submitButton {
+    height: 60%;
+    width: 30%;
+    margin-left: 5%;
+}
 .gameStatus {
     min-width: 25%;
     max-height: 90%;
-    margin: 1% 12% 1% 3%;
+    margin: 1% 3% 1% 3%;
     padding: .3%;
     font-size: 2em;
     justify-content: center;
@@ -34,9 +58,9 @@ header {
     background-color: ghostwhite;
 }
 select {
-    min-width: 8%;
+    max-width: 15%;
     height: 35%;
-    margin: 0 2% 0 2%;
+    margin: 0 1% 0 1%;
     text-align: center;
     align-items: center;
     justify-content: center;
@@ -48,16 +72,18 @@ select option {
     background-color:ghostwhite;
     
 }
-#hiddenOption {
+.hiddenOption {
     display: none;
 }
 .htmlGameBoard {
-    width: 60%;
-    max-height: 100%;
-    margin: 0 1% 0 1%;  
+    min-width: 70%;
+    max-width: 90%;
+    min-height: 60%;
+    max-height: 86%; 
     border: 6px solid rgb(83, 141, 168);
     background-color: rgb(7, 90, 79);
     align-items: center;
+    flex:1;
     justify-content: center;
     flex-flow: row nowrap;
     border-radius: .3rem;
@@ -65,13 +91,13 @@ select option {
 }
 .styleColumn {
     margin: 0;
-    padding: 0;
-    width: 14.25%;
+    width: 10%;
+    max-width: 17%;
     height: 100%;
     padding: 1%;
     background-color: rgb(71, 167, 154);
     flex-flow: column-reverse;
-    flex: 1%;
+    flex: 1;
     align-items: center;
     justify-content: center;
     border-radius: .1rem;
@@ -79,11 +105,10 @@ select option {
 }
 .styleSlot {
     margin: 10%;
-    width: 75%;
-    height: 75%;
-    
+    min-width: 90%;
+    max-height: 15%;
     background-color: rgba(121, 115, 69, 0.479);
-    flex: 1%;
+    flex: 1;
     align-items: center;
     justify-content: space-around;
     border: 3px solid rgba(0, 0, 0, 0.103);
@@ -104,8 +129,8 @@ select option {
     width: 96%;
     box-shadow: .1px .1px 2px rgba(0, 0, 0, 0.514);
     border-radius: 50%;
+    flex: 1;
     z-index: -1;
-    inner
 }
 
 
@@ -113,9 +138,43 @@ select option {
 
 
 
-head{
-    display: none;
+
+
+.styleWinScreen {
+    width: 80%;
+    height: 30%;
+    flex-flow: column;
+    background-color: rgb(108, 182, 157);
+    border-radius: 2rem;
+    align-items: center;
+    transition: ease-in-out;
+    
 }
-script{
+.styleWinScreen:hover {
+    box-shadow: .1px .1px 6px rgb(0, 0, 0);
+}
+.styleWinMessage {
+    width: 70%;
+    height: 45%;
+    font-size: 4rem;
+    text-shadow: .1px .5px 2px rgba(0, 0, 0, 0.479);
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+.styleReset {
+    width: 18%;
+    height: 12%;
+    text-shadow: .1px .5px 2px rgba(0, 0, 0, 0.288);
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+
+
+
+
+
+
+
+script {
     display: none;
 }
