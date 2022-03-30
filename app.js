@@ -63,21 +63,23 @@ const gameState = {
                 // gets the location value for where the last click event *SHOULD* place
                
                 let slotValue = gameState.gameBoard[gameState.lastClickEvent.column].get(`slot${i}`)
-              
+                                
                 if (slotValue === null) {
                     //assigns the slot value according to the active players turn
                     gameState.gameBoard[gameState.lastClickEvent.column].set(`slot${i}`, gameState.turn)
                     gameState.lastClickEvent.slot = `slot${i}`
-
-
+                                        
+                    //----------------------------------------------------------------
                     //places a token same unassigned slot as slotFinder, *Visually*, assigned to the current player's turn
                     function generateGameToken() {
+                                
                         const slot = document.querySelector(`#` + gameState.lastClickEvent.column + gameState.lastClickEvent.slot)
                         const token = document.createElement('div')
                         token.id = `${gameState.lastClickEvent.column+gameState.lastClickEvent.slot+'token'}`
                         token.classList.add(`${gameState.turn}PlayerToken`, `styleToken`)
                         slot.appendChild(token)
                     }
+                    //------------------------------------------------------------------------------
                     // *function call*
                     generateGameToken()
                     break;
@@ -345,7 +347,9 @@ visBoard.addEventListener(`click`, async function (event) {
     //value is the ID of the column at the click event
     // *****************slice band-aid+++++ revisit later
     gameState.lastClickEvent.column = await event.target.id.slice(0, 7)
+    //--
     gameState.placeGameToken()
+
     gameState.checkForWinner()
     if (gameState.turn === gameState.players[0]) {
         gameState.turn = gameState.players[1]
